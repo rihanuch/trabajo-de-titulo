@@ -1,1 +1,13 @@
 .DS_Store
+
+# auxiliary files
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.lof
+*.log
+*.out
+*.lot
+*.toc
