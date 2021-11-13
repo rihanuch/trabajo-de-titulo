@@ -11,3 +11,6 @@
 *.out
 *.lot
 *.toc
+
+# utils files
+utils/*
