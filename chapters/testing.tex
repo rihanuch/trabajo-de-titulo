@@ -1,4 +1,4 @@
-\section{Objetivos y contextualización}
+\textit{}\section{Objetivos y contextualización}
 
   Una práctica muy utilizada dentro del desarrollo de proyectos grandes de \textit{software} es el uso de testing unitario de los difernte componentes de la aplicación que sobre la que se trabaja. Esta práctica tiene dos objetivos principales: primero el poder tener seguridad de que el código escrito efectivamente cumple el propósito por el cuál fue programado, y en segundo lugar, el tener la seguridad de que al cambiar una parte del código, este siga cumpliendo su función original. En la práctica, el segundo punto es sumamente útil al momento de reazlizar cambios al \textit{code base} existente, dado que se quiere seguir teniendo la misma funcionalidad, pero cambiando el código interno, en lo que se conoce como \textit{refactor} y mediante las pruebas se puede tener la seguridad de que todo siga en orden después de haber realizado el o los cambios. 
   
@@ -47,3 +47,35 @@
   \end{figure}
 
 \section{Resultados}
+
+  Los principales resultados obtenidos de este proyecto fueron superiores a los propuestos originalmente. En particular se logó lo siguiente:
+  
+  \begin{enumerate}
+    \item Cobertura de final de 64,04\% en \textit{Hive}.
+    
+    Se logró una cobertura de casi un 65\% del ERP, tal como se puede ver en la figura \ref{fig:testing_final}. Esto fue posible mediante la \textbf{simulación} de la ejecución de código previo a su puesta en producción y la aplicación de \textbf{conocimientos avanzados} de \textit{testing} para el \textit{framework} de RoR. Sumado a esto, también se tuvo extremo cuidado al momento de desarrollar las pruebas, evitando el escribir contraseñas o información sensible en estos mediante el uso de las herramientas proveídas por Rails, \textbf{cumpliendo con restricciones técnicas y éticas} para evitar que estas sean filtradas de manera pública a internet.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=\linewidth]{figures/testing/testing_final.png}
+      \caption{Cobertura final del ERP (captura tomada el 15 de noviembre de 2021).}
+      \label{fig:testing_final}
+    \end{figure}
+
+    \item Escritura de más de 2800 líneas de pruebas automatizadas.
+    
+    El incremento de la cobertura se logró mediante la escritura o modificación de 115 archivos con un total de 2816 líneas de código nuevas dedicadas exclusivamente a la automatización del proceso de pruebas, lo cual se puede ver en la figura \ref{fig:testing_file_commits}.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=\linewidth]{figures/testing/testing_file_commits.png}
+      \caption{Archivos modificados y generados durante creación de nuevas pruebas.}
+      \label{fig:testing_file_commits}
+    \end{figure}
+
+    \item Implementación de flujo de integración continua con pruebas automatizadas.
+    
+    La implementación del flujo de pruebas automatizadas en Circle CI tiene como principal resultado el incremento en confiabilidad del código escrito, y, por lo tanto, la disminución del \textit{downtime} generado por líneas no probadas para el equipo \textit{TechOps} y para la aplicación de \textit{Hive}. Sumado a lo anterior, esta implementación también consideró un flujo con menor cantidad de código al reescribir, en gran parte, los comandos que generaban los \textit{deployments} a GKE, reutilizando código y haciéndolo más legible al aplicar \textbf{patrones de diseño de \textit{software}} y eliminando muchos \textit{code smells} (antipatrones de diseño, que ocurren cuando el código no sigue estándares y que pueden indicar problemas más profundos \cite{code_smells}).
+
+  \end{enumerate}
+ 
