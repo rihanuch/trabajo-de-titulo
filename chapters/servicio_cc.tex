@@ -154,6 +154,33 @@
       \label{fig:cc_new_manager}
     \end{figure}
 
-
-
 \section{Resultados}
+
+  Los resultados obtenidos para este proyecto estuvieron por sobre lo esperado en un comienzo. En particular se logró lo siguiente:
+
+  \begin{enumerate}
+    \item Servicio independiente de \textit{Hive}.
+    
+    Se creó un servicio independiente del ERP, que permitirá que se tenga la información descentralizada y se pueda enfocar en su única función de cálculo de costos y almacenamiento de planes de los clientes con tecnologías que no habían sido utilizadas dentro de la empresa anteriormente (GraphQL).
+
+    \item Creación de modelos de planes flexibles.
+
+    Se logró diseñar modelos de planes y condiciones lo suficientemente flexibles de manera que abarcaran a todos los casos existentes y por existir. Junto a esto, la forma en que se abarcó el campo ``\texttt{condition}'' del modelo perimitió tener un \textit{solver} flexible que se adaptase a la forma de resolver el csoto de los planes de manera correcta. Esta flexibilidad se logró mediante al trabajo entre múltiples áreas de la empresa, con especial foco en operaciones y ventas de manera de que se pudiese entender de mejor manera el problema y dolor existente. El esquema del modelo se logró definir gracias a un \textbf{análisis sistemático de los problemas} de los usuarios y trabajo en conjunto con las diferentes áreas de la empresa.
+
+    \item Servicio con 87,9\% de precisión de facturación.
+    
+    Se creó un servicio de resolución de condiciones comerciales independiente del estado de los clientes, que permite calcular el costo asociado al uso de cada cliente, por producto, por servicio y por moneda. Esto permitió que se tenga una facturación mucho más precisa que otros intentos para la resolución de este problema, subiendo en más de un 40\% la precisión de la facturación de más de 500 facturas desde el último intento que fue en Hubspot con una precisión de 43\%. Esto se pudo lograr mediante una batería de \textbf{simulaciones de soluciones} y aplicación de \textbf{conocimientos avanzados de ingeniería de software} de manera de crear un \textit{software} escalable mediante diferentes patrones de diseño.
+
+    \item Formularios de creación de condiciones.
+
+    El alumo programó las vistas de \textit{frontend} dentro de \textit{Hive} mediante el diseño en conjunto con \textit{design ops}, resultando en los formularios especializados para los vendedores y el totalmente personalizable para los gerentes. Estos formularios quedaron \textbf{expresados en JavaScript} en el \textit{framework} de React.
+    
+    \item Vista de aprobación.
+    
+    Se desarrolló una vista especializada que permite que los gerentes de la empresa aprueben o rechacen las propuestas de asociaciones comerciales creadas por los vendedores en caso de que no sean tengan valores preaprobados. El objetivo de esta vista es poder tener una visión rápida de lo que están haciendo los vendedores de la empresa y también poder tener un control fino de qué tipos de condiciones comerciales se tiene para los clientes.
+    
+    \item Correos de estado propuestas comerciales.
+    
+    Se crearon 3 correos automáticos que se envían en diferentes momentos acorde a los cambios de estado que ocurran para los planes y para las propuestas de de asociaciones comerciales.
+
+  \end{enumerate}
