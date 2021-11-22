@@ -62,7 +62,7 @@
 
     El paso siguiente a la creación de los modelos a utilizar, fue el de la creación de un módulo dentro del servicio de condiciones comerciales  que permitiese calcular la facturación adecuada para un cliente en específico dado el uso que este tuvo durante el mes. El módulo de cálculo se basa en un servicio específico para cada producto existente dentro de la empresa, es decir, por cada producto se tiene un servicio específico para calcular y resolver el cobro a realizar para ese producto dado el uso entregado.
 
-    La información externa que el servicio de cálculo requiere es el identificador del cliente, junto con el uso de los productos. Al momento de hacer el llamado al servicio, este, con la información entregada, se programó de manera de que pase por una calculadora genera y delegador, de manera de que se subdelegue el cálculo del monto a facturar por cada producto a los subservicios específicos por productos. Por otro lado, la información del tipo de cobro se obtiene directamente desde la base de datos del servicio mediante el producto que se quiere calcular y el identificador del cliente para el cual se está calculando.
+    La información externa que el servicio de cálculo requiere es el identificador del cliente, junto con el uso de los productos. Al momento de hacer el llamado al servicio, este, con la información entregada, se programó de manera de que pase por una calculadora genera y delegador, de manera de que se subdelegue el cálculo del monto a facturar por cada producto a los subservicios específicos por productos. Este último diseño se basó en la implementación del patrón de diseño ``mediador'', en el cual se restringe las comunicaciones directas entre los objetos, forzándolos a colaborar únicamente a través de un objeto mediador \cite{pattern_mediator} y ``fachada'', en el cual se proporciona una interfaz simplificada a una biblioteca \cite{pattern_facade}. Por otro lado, la información del tipo de cobro se obtiene directamente desde la base de datos del servicio mediante el producto que se quiere calcular y el identificador del cliente para el cual se está calculando.
     
     Una vez que se realizó el cálculo por producto, el servicio retorna la información a un método que agrupa los diferentes resultados, suma el total y entrega un desglose por producto y por moneda, especificando el servicio de resolución utilizado, junto con la glosa a utilizar al momento de generar la factura en el ERP. En la figura \ref{fig:cc_calculator} se puede ver de manera general el flujo utilizado en el \textit{solver} y calculadora de costos.
 
@@ -90,6 +90,70 @@
     Posteriormente, el alumno le pidió al CEO de la empresa, Sebastián Ojeda, el archivo de Excel en el cual mantenía las condiciones comerciales de manera de poder poblar el servicio. Para esto, el alumno se comprometió a no entregar los datos de facturación a nadie sin autorización previa, manteniendo un código ético intachable dada la sensibilidad de los datos. Adicionalmente, dado que el elevado número de contratos de la empresa (mayor a 500), se decidió escribir código que transcribiese el archivo excel al formato del servicio, generando más de 1500 planes diferentes válidos.
 
     Luego de que se transcribieran los planes generados al servicio de condiciones comerciales, el alumno se coordinó con el equipo de \textit{Data Science} de manera de poder hacer simulaciones de facturación antes de poner en funcionamiento el servicio de generación de facturas reales. De esta manera, se simuló una ejecución del problema real y se puso a prueba el código desarrollado para tener conocimiento de cuán preciso era. El alumno trabajó con el equipo de \textit{Data Science}, dado que este es el encargado de la carga de datos de uso de los clientes, por lo que se pudo generar simulaciones con diferentes niveles de uso y para diferentes clientes. Los resultados obtenidos fueron altamente prometedores, obteniendo aproximadamente una precisión de facturación del orden de 87,9\%. Finalmente, el 28 de octubre corrió el servicio de generación automática de pre-facturas exitosamente y recibió comentarios muy positivos por el equipo contable de la empresa, dado que no tuvieron que modificar las pre-facturas antes de emitirlas.
+
+  \subsection{Creación de condiciones por parte de vendedores y aprobación de gerentes}
+    En paralelo junto con la generación automática de pre-facturas, el alumno trabajó en 4 vistas dentro del ERP, las cuales correspondían a dos formularios y dos vistas generales. Adicionalmente se crearon 3 plantillas de correos mediante HTML, CSS y Ruby embebi; estas se detallarán más adelante. Estas vistas fueron validadas y diseñadas junto a Grace Lillo, del equipo de \textit{design ops}, de manera de que estas fueran realmentes útiles para los usuarios finales. Cabe mencionar que estas vistas fueron generadas utilizando los componentes de \textit{Honeypot} en React. 
+    
+    % vista general de condiciones comerciales
+    En primer lugar, el estudiante programó una vista general en donde los vendedores pueden ver las condiciones comerciales preaprobadas por los gerentes, de manera de poder tener una noción de cuáles son las condiciones de cada plan antes de utilizarlo para un determinado cliente. A continuación, en la figura \ref{fig:cc_visible}, se puede ver la vista mencionada anteriormente.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{figures/cc/vistas/cc_visible.png}
+      \caption{Vista general de condiciones comerciales preaprobadas.}
+      \label{fig:cc_visible}
+    \end{figure}
+
+    % vista de creacion de condicion comercial nueva por vendedor
+    En segundo lugar, el alumno realizó una formulario que le permite a los vendedores crear asociaciones comerciales, es decir, asociar una condición comercial existente y preaprobada a un cliente determinado. Parte crucial del formulario es el hecho de que se puedan definir precios distintos y montos mínimos a facturar solamente para los productos y no para los servicios, ya que esto va en línea con el plan de la empresa de tener planes estandarizados y asimilarse más a un SaaS tradicional. 
+    
+    Un punto importante de este flujo es el hecho de que si el vendedor cambia el precio predefinido del tramo de un producto, entonces se notificará mediante un correo como el de la figura \ref{fig:cc_mail_new} a los gerentes de esta propuesta, de manera de que esta propuesta pueda ser aprobada o rechazada. En caso de que el plan preaprobado no tenga cambios en los precios, este se aprobará de manera automática. Lo anterior fue un pedido específico por parte de los gerentes con el propósito de de poder tener mayor control sobre los tipos de planes que crean los vendedores para así evitar la generación de planes poco comunes. 
+    
+    El formulario mencionado se puede ver en la figura \ref{fig:cc_new_sales_man}.
+
+    % vistas de nueva condicion comercial y mail
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{figures/cc/mails/cc_mail_new.png}
+      \caption{Correo electrónico de solicitud de aprobación de asociación comercial.}
+      \label{fig:cc_mail_new}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{figures/cc/vistas/cc_new_sales_man.png}
+      \caption{Vista general de condiciones comerciales preaprobadas.}
+      \label{fig:cc_new_sales_man}
+    \end{figure}
+
+    % vista de creacion de aprobacion de condicion comercial
+    En tercer lugar, el alumno programó una vista para los gerentes en la cual estos pueden aprobar o rechazar las propuestas de asociaciones comerciales creadas con precios no estándares. Esta vista se puede ver en la figura \ref{fig:cc_review}. Una vez que los gerentes aprueben o rechacen la propuesta, esto se le notificará al vendedor correspondiente el correo correspondiente de la figura \ref{fig:cc_approve_reject}.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=\linewidth]{figures/cc/mails/cc_approve_reject.jpeg}
+      \caption{Correo electrónico de aprobación (izquierda) y rechazo (derecha) de asociación comercial.}
+      \label{fig:cc_approve_reject}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{figures/cc/vistas/cc_review.png}
+      \caption{Vista de aprobación y rechazo de asociaciones comerciales.}
+      \label{fig:cc_review}
+    \end{figure}
+
+    % vista de creacion de condicion comercial nueva desde cero por gerente
+
+    En cuarto, y último luar, se realizó un formulario totalmente personalizado para la creación de planes no estandarizados, tanto para productos como servicios. Este formulario solo es accesible por los vendedores, sino que solamente los genertes tienen acceso. El propósito de este formulario es poder crear un plan totalmente a medida para un cliente en caso de que un plan estándar no permita abarcar el tipo de contrato que se cerró. Esta decisión de restricción del formulario a los gerentes se generó principalmente para evitar el fomentar que los vendedores vendan el producto de manera no estandarizada y Beetrack se pueda acercar más a un SaaS tradicional. En la figura \ref{fig:cc_new_manager} se puede observar el formulario descrito anteriormente.
+ 
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{figures/cc/vistas/cc_new_manager.png}
+      \caption{Vista general de condiciones comerciales preaprobadas.}
+      \label{fig:cc_new_manager}
+    \end{figure}
+
 
 
 \section{Resultados}
