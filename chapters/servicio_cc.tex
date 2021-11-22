@@ -57,4 +57,30 @@
       \caption{Relaciones de modelos de condiciones comerciales.}
       \label{fig:cc_relations}
     \end{figure}
+
+  \subsection{\textit{Solver} de condiciones y arquitectura}
+
+    El paso siguiente a la creación de los modelos a utilizar, fue el de la creación de un módulo dentro del servicio de condiciones comerciales  que permitiese calcular la facturación adecuada para un cliente en específico dado el uso que este tuvo durante el mes. El módulo de cálculo se basa en un servicio específico para cada producto existente dentro de la empresa, es decir, por cada producto se tiene un servicio específico para calcular y resolver el cobro a realizar para ese producto dado el uso entregado.
+
+    La información externa que el servicio de cálculo requiere es el identificador del cliente, junto con el uso de los productos. Al momento de hacer el llamado al servicio, este, con la información entregada, se programó de manera de que pase por una calculadora genera y delegador, de manera de que se subdelegue el cálculo del monto a facturar por cada producto a los subservicios específicos por productos. Por otro lado, la información del tipo de cobro se obtiene directamente desde la base de datos del servicio mediante el producto que se quiere calcular y el identificador del cliente para el cual se está calculando.
+    
+    Una vez que se realizó el cálculo por producto, el servicio retorna la información a un método que agrupa los diferentes resultados, suma el total y entrega un desglose por producto y por moneda, especificando el servicio de resolución utilizado, junto con la glosa a utilizar al momento de generar la factura en el ERP. En la figura \ref{fig:cc_calculator} se puede ver de manera general el flujo utilizado en el \textit{solver} y calculadora de costos.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.5\linewidth]{figures/cc/cc_calculator.jpg}
+      \caption{Esquema de delegación de \textit{solver} y calculadora.}
+      \label{fig:cc_calculator}
+    \end{figure}
+
+
+    Posteriormente, una vez realizado el servicio de cálculo, se procedió a conectar el ERP con el servicio de condiciones comerciales. Para realizar la conexión se optó por utilizar una API con GraphQL expuesta por parte del servicio de condiciones comerciales. Por parte de \textit{Hive}, se utilizó Artemis, una librería de RoR que permite conectar el cliente, en este caso el ERP, con la API de manera casi invisible, exponiendo los métodos como si fuesen nativos de la aplicación \cite{artemis_gem}. Esta implementación permite a su vez que otras aplicaciones dentro de Beetrack consuman el servicio mediante el ERP, en caso de ser requerido. En la figura \ref{fig:cc_arquitectura} se puede observar la arquitectura con los dos \textit{pods} diferentes de GKE, uno para el ERP y otro para el servicio de condiciones comerciales y su comunicación mediante una API con GraphQL.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=\linewidth]{figures/cc/cc_arquitectura.jpg}
+      \caption{Relaciones de modelos de condiciones comerciales.}
+      \label{fig:cc_arquitectura}
+    \end{figure}
+    
 \section{Resultados}
