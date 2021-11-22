@@ -83,4 +83,12 @@
       \label{fig:cc_arquitectura}
     \end{figure}
     
+  \subsection{\textit{Refactoring} y generación de facturas automáticas}
+
+    Una vez que el alumno conectó el servicio de condiciones comerciales al ERP, este procedió a desacoplar el sistema antiguo que generaba las facturas de manera automática los 28 de cada mes. Esto se hizo en favor del servicio nuevo externo a \textit{Hive}, adaptando el código antiguo al sistema nuevo permitiendo un desacoplamiento de la lógica por parte del ERP, delegándosela al sistema creado. Este cambio implicó la eliminación de más de mil líneas de código en el ERP, con cosas tales como la generación de glosas y cálculo de montos a facturar.
+
+    Posteriormente, el alumno le pidió al CEO de la empresa, Sebastián Ojeda, el archivo de Excel en el cual mantenía las condiciones comerciales de manera de poder poblar el servicio. Para esto, el alumno se comprometió a no entregar los datos de facturación a nadie sin autorización previa, manteniendo un código ético intachable dada la sensibilidad de los datos. Adicionalmente, dado que el elevado número de contratos de la empresa (mayor a 500), se decidió escribir código que transcribiese el archivo excel al formato del servicio, generando más de 1500 planes diferentes válidos.
+
+    Luego de que se transcribieran los planes generados al servicio de condiciones comerciales, el alumno se coordinó con el equipo de \textit{Data Science} de manera de poder hacer pruebas de facturación antes de poner en funcionamiento el servicio de generación de facturas reales.  Esto se debe a que el equipo de \textit{Data Science} es el encargado de la carga de datos de uso de los clientes, por lo que se corrieron simulaciones con usos de clientes para todos los clientes de la empresa. Los resultados obtenidos fueron altamente prometedores, obteniendo aproximadamente una precisión de facturación del orden de 87,9\%. Finalmente, el 28 de octubre corrió el servicio de generación automática de pre-facturas exitosamente y recibió comentarios muy positivos por el equipo contable de la empresa, dado que no tuvieron que modificar las pre-facturas antes de emitirlas.
+
 \section{Resultados}
