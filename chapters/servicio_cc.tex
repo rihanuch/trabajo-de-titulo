@@ -27,7 +27,7 @@
       \item \texttt{add\_base\_to\_variable}: se utiliza al momento de calcular el costo del uso del producto, y sirve para saber si el plan que se negoció con el cliente se entiende de manera de que se cobre sumando el costo base o utilizando el costo unitario del tramo variable en caso de aplicar.
     \end{enumerate}
     
-    El esquema de información del campo ``\texttt{condition}'' se puede ver en la figura \ref{fig:cc_condition_schema}, mientras que en la figura \ref{fig:cc_pricing_chart} se puede observar una manera visual de entender el modelo de precios y condiciones comerciales de los clientes.
+    El esquema de información del campo ``\texttt{condition}'' se puede ver en la figura \ref{fig:cc_condition_schema}, mientras que en la figura \ref{fig:cc_pricing_chart} se puede observar una manera visual de entender el modelo de precios y condiciones comerciales de los clientes. Es importante mencionar que se hizo uno uso avanzados de RoR mediante la creación de artefactos de validación que permniten mantener los esquemas de datos establecidos en la figura \ref{fig:cc_condition_schema}. Al mismo tiempo, también se utilizó validación de los datos en si mismos, forzando a que siempre se tengan tramos positivos, sin sobrelape y que sean rangos acotados, de manera de que las condiciones siempre tengan las formas de la figura \ref{fig:cc_pricing_chart}.
     
     \begin{figure}
       \centering
