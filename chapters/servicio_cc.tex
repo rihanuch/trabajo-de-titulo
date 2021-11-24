@@ -11,6 +11,7 @@
 \section{Desarrollo}
 
   \subsection{Modelamiento}
+    \label{modelamiento}
 
     El proceso de desarrollo del nuevo servicio de condiciones comerciales comenzó con un análisis de los diferentes planes existentes y que se encuentraban en uso en por parte de la empresa. Luego de realizar este análisis se definieron 4 modelos diferentes a nivel de base de datos que permitirían almacenar de manera flexible las condiciones con las cuales se les factura a los clientes. 
     
@@ -59,6 +60,7 @@
     \end{figure}
 
   \subsection{\textit{Solver} de condiciones y arquitectura}
+    \label{solver_y_arquitectura}
 
     El paso siguiente a la creación de los modelos a utilizar, fue el de la creación de un módulo dentro del servicio de condiciones comerciales  que permitiese calcular la facturación adecuada para un cliente en específico dado el uso que este tuvo durante el mes. El módulo de cálculo se basa en un servicio específico para cada producto existente dentro de la empresa, es decir, por cada producto se tiene un servicio específico para calcular y resolver el cobro a realizar para ese producto dado el uso entregado.
 
